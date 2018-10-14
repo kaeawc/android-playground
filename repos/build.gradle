@@ -62,7 +62,6 @@ dependencies {
 
     // Android Support Libraries
     implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
-    implementation "androidx.browser:browser:${versions.androidX}"
     implementation "com.google.android.material:material:${versions.androidX}"
     implementation "androidx.palette:palette:${versions.androidX}"
     implementation "androidx.recyclerview:recyclerview:${versions.androidX}"
@@ -96,4 +95,8 @@ dependencies {
     testImplementation "com.squareup.retrofit2:retrofit-mock:${versions.retrofit}"
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.mockito:mockito-core:${versions.mockito}"
+
+    implementation project(":domain")
+    implementation project(":api")
+    implementation project(":storage")
 }
