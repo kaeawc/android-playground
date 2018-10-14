@@ -1,0 +1,105 @@
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+
+android {
+    compileSdkVersion versions.compileSdk
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            crunchPngs false
+            debuggable true
+            minifyEnabled false
+            testCoverageEnabled true
+            rootProject.ext.alwaysUpdateBuildId = false
+        }
+    }
+
+    lintOptions {
+        abortOnError true
+        checkReleaseBuilds false
+        absolutePaths false
+        checkAllWarnings true
+    }
+
+    packagingOptions {
+        exclude "META-INF/rxjava.properties"
+        exclude "META-INF/DEPENDENCIES.txt"
+        exclude "META-INF/LICENSE.txt"
+        exclude "META-INF/NOTICE.txt"
+        exclude "META-INF/NOTICE"
+        exclude "META-INF/LICENSE"
+        exclude "META-INF/DEPENDENCIES"
+        exclude "META-INF/notice.txt"
+        exclude "META-INF/license.txt"
+        exclude "META-INF/dependencies.txt"
+        exclude "META-INF/LGPL2.1"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+    implementation "androidx.core:core-ktx:${versions.coreKtx}"
+    implementation("io.arrow-kt:arrow-core:${versions.arrow}") {
+        exclude group: "org.jetbrains.kotlin", module: "kotlin-stdlib-jdk7"
+        exclude group: "org.jetbrains.kotlin", module: "kotlin-stdlib"
+        exclude group: "org.jetbrains.kotlin", module: "kotlin-reflect"
+    }
+
+    // Android Support Libraries
+    implementation "com.android.support.constraint:constraint-layout:${versions.constraintLayout}"
+    implementation "com.android.support:customtabs:${versions.supportLibrary}"
+    implementation "com.android.support:design:${versions.supportLibrary}"
+    implementation "com.android.support:palette-v7:${versions.supportLibrary}"
+    implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
+    implementation "com.android.support:support-dynamic-animation:${versions.supportLibrary}"
+
+    // Network
+    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-moshi:${versions.retrofit}"
+    implementation "com.squareup.okhttp3:okhttp:${versions.okhttp}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
+
+    // Lifecycle
+    implementation "android.arch.lifecycle:viewmodel:${versions.lifecycle}"
+    implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
+
+    // Image Loading
+    implementation "com.github.bumptech.glide:glide:${versions.glide}"
+    implementation "com.github.bumptech.glide:okhttp3-integration:${versions.glide}"
+    implementation "com.github.bumptech.glide:recyclerview-integration:${versions.glide}"
+    kapt "com.github.bumptech.glide:compiler:${versions.glide}"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:${versions.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
+
+    // Logging
+    implementation "com.jakewharton.timber:timber:${versions.timber}"
+
+    // Time
+    implementation "com.jakewharton.threetenabp:threetenabp:${versions.threeten}"
+
+    // Storage
+    implementation "android.arch.persistence.room:runtime:${versions.room}"
+    kapt "android.arch.persistence.room:compiler:${versions.room}"
+
+    // Unit Testing
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.mockito_kotlin}"
+    testImplementation "com.squareup.retrofit2:retrofit-mock:${versions.retrofit}"
+    testImplementation "junit:junit:${versions.junit}"
+    testImplementation "org.mockito:mockito-core:${versions.mockito}"
+}
