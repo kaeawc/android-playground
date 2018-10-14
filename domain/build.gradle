@@ -75,18 +75,11 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
 
     // Lifecycle
-    implementation "android.arch.lifecycle:viewmodel:${versions.lifecycle}"
-    implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
-
-    // Image Loading
-    implementation "com.github.bumptech.glide:glide:${versions.glide}"
-    implementation "com.github.bumptech.glide:okhttp3-integration:${versions.glide}"
-    implementation "com.github.bumptech.glide:recyclerview-integration:${versions.glide}"
-    kapt "com.github.bumptech.glide:compiler:${versions.glide}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
 
     // Dagger
     implementation "com.google.dagger:dagger:${versions.dagger}"
-    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 
     // Logging
     implementation "com.jakewharton.timber:timber:${versions.timber}"
@@ -95,8 +88,7 @@ dependencies {
     implementation "com.jakewharton.threetenabp:threetenabp:${versions.threeten}"
 
     // Storage
-    implementation "android.arch.persistence.room:runtime:${versions.room}"
-    kapt "android.arch.persistence.room:compiler:${versions.room}"
+    implementation "androidx.room:room-runtime:${versions.room}"
 
     // Unit Testing
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.mockito_kotlin}"
