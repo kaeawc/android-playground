@@ -2,12 +2,21 @@
 <resources>
 
     <!-- Primary & Accent -->
-    <color name="colorPrimary">#fff</color>
-    <color name="colorPrimaryDark">#ddd</color>
+    <color name="colorPrimary">@color/white</color>
+    <color name="colorPrimaryDark">#f6f6f6</color>
     <color name="colorAccent">#0af</color>
 
     <!-- Text -->
-    <color name="colorText">#000</color>
+    <color name="colorText">@color/black</color>
     <color name="colorTextLink">#07b</color>
+
+    <!-- Backgrounds -->
+    <color name="background">@color/lightGray</color>
+
+    <!-- Colors -->
+    <color name="black">#000</color>
+    <color name="white">#fff</color>
+    <color name="lightGray">#ddd</color>
+    <color name="gray">#aaa</color>
 
 </resources>
