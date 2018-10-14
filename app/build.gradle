@@ -4,6 +4,7 @@ apply plugin: "kotlin-android-extensions"
 
 android {
     compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
 
     defaultConfig {
         applicationId "io.kaeawc.app"
@@ -71,12 +72,12 @@ dependencies {
     }
 
     // Android Support Libraries
-    implementation "com.android.support.constraint:constraint-layout:${versions.constraintLayout}"
-    implementation "com.android.support:customtabs:${versions.supportLibrary}"
-    implementation "com.android.support:design:${versions.supportLibrary}"
-    implementation "com.android.support:palette-v7:${versions.supportLibrary}"
-    implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
-    implementation "com.android.support:support-dynamic-animation:${versions.supportLibrary}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
+    implementation "androidx.browser:browser:${versions.androidX}"
+    implementation "com.google.android.material:material:${versions.androidX}"
+    implementation "androidx.palette:palette:${versions.androidX}"
+    implementation "androidx.recyclerview:recyclerview:${versions.androidX}"
+    implementation "androidx.dynamicanimation:dynamicanimation:${versions.androidX}"
 
     // Network
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
