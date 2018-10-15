@@ -1,1 +1,1 @@
-include ':app', ':api', ':storage', ':repos', ':launch', ':domain'
+include ':app', ':github', ':storage', ':repos', ':launch', ':domain'
