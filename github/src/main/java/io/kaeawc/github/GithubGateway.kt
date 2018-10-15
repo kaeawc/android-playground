@@ -8,14 +8,14 @@ import io.reactivex.Single
 open class GithubGateway(open val githubApi: GithubApi) {
 
     fun getAll(): Single<Try<List<Repository>>> {
-        return githubApi.getRepositories()
+        return githubApi.getRepositories("public", "updated", "desc")
                 .firstOrError()
                 .map { Try { it } }
                 .onErrorReturn { Failure(it) }
     }
 
-    fun getRepositoryDetails(): Single<Try<Repository>> {
-        return githubApi.getRepositoryDetails()
+    fun getRepository(name: String): Single<Try<Repository>> {
+        return githubApi.getRepositoryDetails(name)
                 .firstOrError()
                 .map { Try { it } }
                 .onErrorReturn { Failure(it) }

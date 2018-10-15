@@ -16,7 +16,8 @@ abstract class RepositoryDao : BaseDao<Repository>() {
     internal abstract fun queryAll(): Maybe<List<Repository>>
 
     fun getAll(): Single<Try<List<Repository>>> =
-            queryAll().map { Try { it } }
+            queryAll()
+                    .map { Try { it } }
                     .toSingle()
                     .onErrorReturn { Failure(it) }
 
@@ -24,15 +25,25 @@ abstract class RepositoryDao : BaseDao<Repository>() {
     internal abstract fun queryStreamOfAll(): Flowable<List<Repository>>
 
     fun getStreamOfAll(): Flowable<Try<List<Repository>>> =
-            queryStreamOfAll().map { Try { it } }
+            queryStreamOfAll()
+                    .map { Try { it } }
                     .onErrorReturn { Failure(it) }
 
     @Query("SELECT * FROM repository WHERE name = :name LIMIT 1")
     internal abstract fun queryByName(name: String): Maybe<Repository>
 
     fun getByName(name: String): Single<Try<Repository>> =
-            queryByName(name).map { Try { it } }
+            queryByName(name)
+                    .map { Try { it } }
                     .toSingle()
+                    .onErrorReturn { Failure(it) }
+
+    @Query("SELECT * FROM repository WHERE name = :name LIMIT 1")
+    internal abstract fun queryStreamByName(name: String): Flowable<Repository>
+
+    fun getStreamByName(name: String): Flowable<Try<Repository>> =
+            queryStreamByName(name)
+                    .map { Try { it } }
                     .onErrorReturn { Failure(it) }
 
 }

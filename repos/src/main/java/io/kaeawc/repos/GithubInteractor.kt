@@ -19,7 +19,7 @@ import java.lang.NullPointerException
 import javax.inject.Inject
 
 @ApplicationScope
-open class GithubRepository @Inject constructor(
+open class GithubInteractor @Inject constructor(
         open val gateway: GithubGateway,
         open val prefs: Prefs,
         open val database: Database
@@ -40,10 +40,10 @@ open class GithubRepository @Inject constructor(
     }
 
     /**
-     * Get stream of [Repository] records and calculate the [DiffResult] between the current
-     * and previous result.
+     * Get stream of [Repository] records and calculate the [DiffUtil.DiffResult]
+     * between the current and previous result.
      */
-    fun getStreamingDiffResultOfAll(): Flowable<Try<Pair<List<Repository>, DiffUtil.DiffResult>>> {
+    fun getStreamingDiffResultOfRepositories(): Flowable<Try<Pair<List<Repository>, DiffUtil.DiffResult>>> {
         return getLocalStreamOfAll()
                 .map { Pair<Try<List<Repository>>, Try<DiffUtil.DiffResult>>(it, Failure(NullPointerException("No diff result"))) }
                 .scan {
@@ -82,17 +82,24 @@ open class GithubRepository @Inject constructor(
     }
 
     /**
-     * Always attempt to use local data before going to the network
+     * Always attempt to use local data before going to the network for a [Repository].
      */
     fun getRepositoryByName(name: String): Single<Try<Repository>> {
-        return database.repository().getByName(name)
+        return database.repository().getByName(name).flatMap {
+            result ->
+            if (result is Success) {
+                Single.just(result)
+            } else {
+                gateway.getRepository(name).map(this::toLocal)
+            }
+        }
     }
 
     private fun getAllRemote(): Single<Try<List<Repository>>> {
         return gateway.getAll().map {
             result ->
             prefs.lastRepositoryFetch = Instant.now()
-            result.map { success -> success.mapNotNull(this::toLocal) }
+            result.map { success -> success.mapNotNull(this::toLocalOrNull) }
         }
     }
 
@@ -117,9 +124,17 @@ open class GithubRepository @Inject constructor(
         return database.repository().getStreamOfAll()
     }
 
-    private fun toLocal(response: io.kaeawc.github.models.Repository): Repository? {
+    private fun toLocalOrNull(response: io.kaeawc.github.models.Repository): Repository? {
+        return Try { toLocalOrThrow(response) }.orNull()
+    }
+
+    private fun toLocalOrThrow(response: io.kaeawc.github.models.Repository): Repository {
         return Repository(
-                response.name ?: return null,
-                response.created ?: return null)
+                response.name ?: throw NullPointerException("Missing name"),
+                response.created ?: throw NullPointerException("Missing created"))
+    }
+
+    private fun toLocal(response: Try<io.kaeawc.github.models.Repository>): Try<Repository> {
+        return response.map(this::toLocalOrThrow)
     }
 }
