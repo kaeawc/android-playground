@@ -77,6 +77,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:${versions.lifecycle}"
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
 
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxandroid:${versions.rxjava}"
+    implementation "io.reactivex.rxjava2:rxjava:${versions.rxandroid}"
+
     // Dagger
     implementation "com.google.dagger:dagger:${versions.dagger}"
 
