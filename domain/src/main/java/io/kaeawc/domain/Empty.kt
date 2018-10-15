@@ -1,3 +1,3 @@
 package io.kaeawc.domain
 
-class Empty()
+class Empty
