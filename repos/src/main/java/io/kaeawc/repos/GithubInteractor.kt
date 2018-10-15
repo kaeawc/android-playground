@@ -35,6 +35,13 @@ open class GithubInteractor @Inject constructor(
         return getAllLocal(requestMoreIfEmpty = true)
     }
 
+    /**
+     * Get latest [Repository] records from GitHub.
+     */
+    fun refreshRemoteData(): Single<Try<List<Repository>>> {
+        return getAllRemote()
+    }
+
     fun getStreamOfAll(): Flowable<Try<List<Repository>>> {
         return getLocalStreamOfAll()
     }

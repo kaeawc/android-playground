@@ -6,9 +6,7 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import arrow.core.Failure
-import arrow.core.Success
-import arrow.core.Try
+import arrow.core.*
 import io.kaeawc.domain.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -28,6 +26,19 @@ class LaunchActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        /**
+         * Check if there are any updates to GitHub [Repository] records.
+         */
+        presenter.refreshData()
+                .subscribe({
+                    result ->
+                    result.map {
+                        Timber.i("Found ${it.size} github records")
+                    }.getOrElse { Timber.e(it,  "SADNESS") }
+
+                }, { Timber.e(it, "no records?")})
+                .dispose(this, Lifecycle.Event.ON_PAUSE)
 
         repositories?.layoutManager = LinearLayoutManager(baseContext)
         val adapter = RepositoryAdapter(emptyList())

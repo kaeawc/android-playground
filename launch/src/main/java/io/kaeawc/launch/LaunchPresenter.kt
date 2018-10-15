@@ -8,12 +8,17 @@ import io.kaeawc.domain.Repository
 import io.kaeawc.domain.Router
 import io.kaeawc.repos.GithubInteractor
 import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 
 @LaunchScope
 open class LaunchPresenter @Inject constructor(
         open val router: Router,
         open val github: GithubInteractor) {
+
+    fun refreshData(): Single<Try<List<Repository>>> {
+        return github.refreshRemoteData()
+    }
 
     fun getAdapterDiffResults(): Flowable<Try<Pair<List<Repository>, DiffUtil.DiffResult>>> =
             github.getStreamingDiffResultOfRepositories()
