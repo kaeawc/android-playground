@@ -6,10 +6,14 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import arrow.core.Failure
+import arrow.core.Success
+import arrow.core.Try
 import io.kaeawc.domain.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_launch.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class LaunchActivity : AppCompatActivity() {
@@ -37,7 +41,7 @@ class LaunchActivity : AppCompatActivity() {
         presenter.getAdapterDiffResults()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ it.map(this::applyGithubChanges) }, {})
+                .subscribe(this::applyGithubChanges) {}
                 .dispose(this, Lifecycle.Event.ON_PAUSE)
 
         /**
@@ -54,11 +58,18 @@ class LaunchActivity : AppCompatActivity() {
     }
 
     @MainThread
-    private fun applyGithubChanges(result: Pair<List<Repository>, DiffUtil.DiffResult>) {
+    private fun applyGithubChanges(result: Try<Pair<List<Repository>, DiffUtil.DiffResult>>) {
         val adapter = (repositories?.adapter as? RepositoryAdapter) ?: return
-        val (records, diffResult) = result
-        adapter.repositories = records
-        diffResult.dispatchUpdatesTo(adapter)
+        when (result) {
+            is Success -> {
+                val (records, diffResult) = result.value
+                adapter.repositories = records
+                diffResult.dispatchUpdatesTo(adapter)
+            }
+            is Failure -> {
+                Timber.e(result.exception, "Unable to update list of repositories")
+            }
+        }
     }
 
     @MainThread
