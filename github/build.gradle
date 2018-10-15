@@ -1,6 +1,7 @@
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion versions.compileSdk
@@ -70,12 +71,18 @@ dependencies {
     // Network
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
     implementation "com.squareup.retrofit2:converter-moshi:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:retrofit-mock:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}"
     implementation "com.squareup.okhttp3:okhttp:${versions.okhttp}"
     implementation "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel:${versions.lifecycle}"
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxandroid:${versions.rxjava}"
+    implementation "io.reactivex.rxjava2:rxjava:${versions.rxandroid}"
 
     // Dagger
     implementation "com.google.dagger:dagger:${versions.dagger}"
