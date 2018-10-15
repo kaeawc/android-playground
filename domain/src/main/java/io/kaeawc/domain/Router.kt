@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
 
 abstract class Router {
 
-    fun intent(context: Context, clazz: KClass<*>): Intent {
+    private fun intent(context: Context, clazz: KClass<*>): Intent {
         val screen = clazz.java.simpleName.replace("Activity", "")
         Timber.d("Routing to $screen")
         return Intent(context, clazz.java)

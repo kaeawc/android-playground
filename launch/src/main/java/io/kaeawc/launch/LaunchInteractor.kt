@@ -7,6 +7,7 @@ import io.kaeawc.repos.GithubRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
+@LaunchScope
 open class LaunchInteractor @Inject constructor(open val github: GithubRepository) {
 
     fun getStreamingDiffOfRepositories(): Flowable<Try<Pair<List<Repository>, DiffUtil.DiffResult>>> {

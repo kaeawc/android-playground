@@ -5,6 +5,7 @@ import arrow.core.Failure
 import arrow.core.Success
 import arrow.core.Try
 import arrow.core.orNull
+import io.kaeawc.domain.ApplicationScope
 import io.kaeawc.domain.Repository
 import io.kaeawc.domain.moreThanHoursAgo
 import io.kaeawc.github.GithubGateway
@@ -17,6 +18,7 @@ import java.lang.IllegalStateException
 import java.lang.NullPointerException
 import javax.inject.Inject
 
+@ApplicationScope
 open class GithubRepository @Inject constructor(
         open val gateway: GithubGateway,
         open val prefs: Prefs,

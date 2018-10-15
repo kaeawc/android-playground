@@ -83,7 +83,6 @@ dependencies {
 
     // Dagger
     implementation "com.google.dagger:dagger:${versions.dagger}"
-    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 
     // Logging
     implementation "com.jakewharton.timber:timber:${versions.timber}"

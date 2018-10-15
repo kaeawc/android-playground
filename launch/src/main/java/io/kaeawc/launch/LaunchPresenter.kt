@@ -9,6 +9,7 @@ import io.kaeawc.domain.Router
 import io.reactivex.Flowable
 import javax.inject.Inject
 
+@LaunchScope
 open class LaunchPresenter @Inject constructor(
         open val router: Router,
         open val interactor: LaunchInteractor) {

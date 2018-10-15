@@ -94,6 +94,7 @@ dependencies {
 
     // Storage
     implementation "androidx.room:room-runtime:${versions.room}"
+    implementation "androidx.room:room-rxjava2:${versions.roomRxJava}"
     kapt "androidx.room:room-compiler:${versions.room}"
 
     // Unit Testing
