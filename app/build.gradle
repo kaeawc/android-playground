@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion versions.compileSdk
@@ -98,6 +99,10 @@ dependencies {
     implementation "com.google.dagger:dagger:${versions.dagger}"
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxandroid:${versions.rxjava}"
+    implementation "io.reactivex.rxjava2:rxjava:${versions.rxandroid}"
+
     // Logging
     implementation "com.jakewharton.timber:timber:${versions.timber}"
 
@@ -114,7 +119,7 @@ dependencies {
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.mockito:mockito-core:${versions.mockito}"
 
-    implementation project(":api")
+    implementation project(':github')
     implementation project(":domain")
     implementation project(":launch")
     implementation project(":repos")
